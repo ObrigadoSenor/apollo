@@ -1,12 +1,14 @@
 {
   "scripts": {
     "dev": "NODE_ENV=development nodemon --watch './**/*.{ts,tsx}' --exec 'ts-node' src/server.ts",
+    "dev-gql": "NODE_ENV=development concurrently --kill-others \"yarn gql-generate-watch\" \"yarn dev\"",
     "build": "NODE_ENV=production esbuild './src/server.ts' --platform=node --bundle --minify  --outfile=dist/server.js",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint-format": "yarn lint --fix",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
-    "generate": "graphql-codegen --config './gql/codegen.yml'",
-    "compile": "yarn generate && yarn build"
+    "gql-generate": "graphql-codegen --config './src/gql/codegen.yml'",
+    "gql-generate-watch": "yarn gql-generate --watch",
+    "compile": "yarn gql-generate && yarn build"
   },
   "husky": {
     "hooks": {
@@ -21,6 +23,7 @@
     "@types/node": "^18.8.1",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
+    "concurrently": "^7.4.0",
     "esbuild": "^0.15.10",
     "eslint": "^8.24.0",
     "husky": "^8.0.1",

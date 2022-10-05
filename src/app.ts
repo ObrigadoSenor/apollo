@@ -5,11 +5,11 @@ import express, { Express } from 'express';
 import { readFileSync } from 'fs';
 
 import http from 'http';
-import { resolvers } from '../gql/resolvers';
+import { resolvers } from './gql/resolvers';
 
 import { EnvsType, EnvValueType } from './../types/envs';
 import routes from './routes';
-import { ApolloContext, dataSources } from '../gql/dataSources';
+import { ApolloContext, dataSources } from './gql/data/dataSources';
 
 export const App = async () => {
   const server = express();
@@ -37,7 +37,7 @@ interface GetApolloServerProps {
 const getApolloServer = async ({ server, port }: GetApolloServerProps) => {
   const httpServer = http.createServer(server);
 
-  const typeDefs = readFileSync(`${__dirname}/../gql/schema.graphql`, { encoding: 'utf-8' });
+  const typeDefs = readFileSync(`${__dirname}/gql/schemas/schemas.graphql`, { encoding: 'utf-8' });
 
   const apollo = new ApolloServer<ApolloContext>({
     typeDefs,

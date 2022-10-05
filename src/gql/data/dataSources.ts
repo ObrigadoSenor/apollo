@@ -1,6 +1,6 @@
 import { DataSource } from 'apollo-datasource';
 import { DataSources } from 'apollo-server-core/dist/graphqlOptions';
-import { Person } from './__generated__/resolvers-types';
+import { Person } from '../__generated__/resolvers-types';
 
 export interface ApolloContext {
   dataSources: {
