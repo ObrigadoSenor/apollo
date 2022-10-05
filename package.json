@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --watch './**/*.{ts,tsx}' --exec 'ts-node' src/server.ts",
+    "dev": "NODE_ENV=development nodemon --watch './**/*.{ts,tsx}' --exec 'ts-node' src/app.ts",
     "dev-gql": "concurrently --kill-others \"yarn gql-generate-watch\" \"yarn dev\"",
-    "build": "NODE_ENV=production esbuild './src/server.ts' --platform=node --bundle --minify  --outfile=dist/server.js",
+    "build": "NODE_ENV=production esbuild './src/app.ts' --platform=node --bundle --minify --tree-shaking=true --outdir=dist/app.js",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint-format": "yarn lint --fix",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
