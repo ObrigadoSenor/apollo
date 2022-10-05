@@ -5,7 +5,7 @@ import { Express } from 'express';
 import http from 'http';
 
 import { EnvValueType } from '../types/envs';
-import { schema } from './db/schemas';
+import { schema } from './db/schemas/schemas';
 
 interface GetApolloServerProps {
   server: Express;
