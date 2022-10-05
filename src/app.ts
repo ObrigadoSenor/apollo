@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { Apollo } from './apollo';
+import { connectToDB } from './db/connect';
 import routes from './routes';
 import { getEnvVars } from './utils/getEnvVars';
 
@@ -10,7 +11,7 @@ export const App = async (): Promise<void> => {
 
   server.use(express.json());
   server.use(routes);
-
+  await connectToDB({ uri: envs.MONGODB_URI });
   await Apollo({ server, port: envs.SERVER_PORT });
 };
 
