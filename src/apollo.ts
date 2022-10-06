@@ -5,13 +5,37 @@ import { Express } from 'express';
 import http from 'http';
 
 import { EnvValueType } from '../types/envs';
-import { schema } from './db/schemas/schemas';
+// import { schema } from './db/schemas/schemas';
 import { validToken } from './utils/validToken';
 
 interface GetApolloServerProps {
   server: Express;
   port: EnvValueType;
 }
+
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { loadSchemaSync } from '@graphql-tools/load';
+import { addResolversToSchema } from '@graphql-tools/schema';
+import { resolve } from 'path';
+import resolvers from './resolvers';
+
+interface GetApolloServerProps {
+  server: Express;
+  port: EnvValueType;
+}
+
+export interface ContextProps {
+  expired: boolean;
+}
+
+const loadSchema = loadSchemaSync(resolve(__dirname, 'schemas/*.graphql'), {
+  loaders: [new GraphQLFileLoader()],
+});
+
+const schema = addResolversToSchema({
+  schema: loadSchema,
+  resolvers,
+});
 
 export const Apollo = async ({ server, port }: GetApolloServerProps) => {
   const httpServer = http.createServer(server);
@@ -20,10 +44,9 @@ export const Apollo = async ({ server, port }: GetApolloServerProps) => {
     schema,
     csrfPrevention: true,
     cache: 'bounded',
-    context: async ({ req }) => {
+    context: async ({ req }): Promise<ContextProps> => {
       const token = req.headers.authorization || '';
       const { node } = (await validToken(token)) || {};
-      console.log('req', req);
 
       return {
         expired: node?.expired,

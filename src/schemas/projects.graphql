@@ -1,0 +1,31 @@
+# import Tag from "tags.graphql"
+# import Status from "status.graphql"
+
+type Project {
+  name: String
+  tags: [Tag]
+  ownerId: String
+}
+
+type GetProjects {
+  status: Status
+  data: [Project]
+}
+
+type GetProject {
+  status: Status
+  data: Project
+}
+
+type SetProject {
+  status: Status
+}
+
+type Mutation {
+  setProject(name: String!): SetProject
+}
+
+type Query {
+  getProjects(ownerId: String!): GetProjects
+  getProject(_id: String!): GetProject
+}
