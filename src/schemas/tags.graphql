@@ -1,0 +1,31 @@
+# import Status from "status.graphql"
+
+type Tag {
+  name: String
+  weight: Int
+  ownerId: String
+  projectId: String
+}
+
+type GetTags {
+  status: Status
+  data: [Tag]
+}
+
+type GetTag {
+  status: Status
+  data: Tag
+}
+
+type SetTag {
+  status: Status
+}
+
+type Mutation {
+  setTag(name: String!, weight: Int!): SetTag
+}
+
+type Query {
+  getTags(projectId: String!): GetTags
+  getTag(projectId: String!, _id: String!): GetTag
+}
