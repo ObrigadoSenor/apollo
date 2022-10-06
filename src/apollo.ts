@@ -26,6 +26,7 @@ interface GetApolloServerProps {
 
 export interface ContextProps {
   expired: boolean;
+  id: string;
 }
 
 const loadSchema = loadSchemaSync(resolve(__dirname, 'schemas/*.graphql'), {
@@ -46,10 +47,12 @@ export const Apollo = async ({ server, port }: GetApolloServerProps) => {
     cache: 'bounded',
     context: async ({ req }): Promise<ContextProps> => {
       const token = req.headers.authorization || '';
+      const id = (req.headers.id || '') as string;
       const { node } = (await validToken(token)) || {};
 
       return {
         expired: node?.expired,
+        id,
       };
     },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],

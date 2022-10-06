@@ -1,7 +1,13 @@
-import { projects } from './projects';
-import { tags } from './tags';
+import { projectQuery, projectMutation } from './projects';
+import { tagsQuery, tagsMutation } from './tags';
 
 export default {
-  ...projects,
-  ...tags,
+  Query: {
+    ...projectQuery,
+    ...tagsQuery,
+  },
+  Mutation: {
+    ...projectMutation,
+    ...tagsMutation,
+  },
 };

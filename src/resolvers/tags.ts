@@ -1,17 +1,15 @@
-import { ContextProps } from './../apollo';
 import {
   GetTag,
   GetTags,
-  Mutation,
   MutationSetTagArgs,
-  Query,
-  QueryGetTagsArgs,
   QueryGetTagArgs,
+  QueryGetTagsArgs,
   SetTag,
 } from '../__generated__/resolvers-types';
+import { ContextProps } from './../apollo';
 
-const Query = {
-  getTags(_: unknown, { projectId }: QueryGetTagsArgs, { expired }: ContextProps): GetTags {
+export const tagsQuery = {
+  getTags(_: unknown, { projectId }: QueryGetTagsArgs, { expired, id }: ContextProps): GetTags {
     return { status: { code: 200 }, data: [] };
   },
   getTag(_: unknown, { projectId }: QueryGetTagArgs, { expired }: ContextProps): GetTag {
@@ -19,13 +17,8 @@ const Query = {
   },
 };
 
-const Mutation = {
-  setTag(_: unknown, { name, weight }: MutationSetTagArgs, { expired }: ContextProps): SetTag {
+export const tagsMutation = {
+  setTag(_: unknown, { name, weight }: MutationSetTagArgs, { expired, id }: ContextProps): SetTag {
     return { status: { code: 200 } };
   },
-};
-
-export const tags = {
-  Query,
-  Mutation,
 };
