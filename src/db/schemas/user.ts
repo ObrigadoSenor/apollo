@@ -2,18 +2,30 @@ import { composeMongoose } from 'graphql-compose-mongoose';
 import { Document, model, Schema } from 'mongoose';
 
 interface UserProps {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  userName: string;
 }
 
 interface UserDocumentProps extends UserProps, Document {}
 
 const UserSchema = new Schema({
-  name: {
+  firstName: {
     type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
   email: {
     type: String,
+    required: true,
+  },
+  userName: {
+    type: String,
+    required: true,
   },
 });
 
@@ -22,8 +34,8 @@ const User = model<UserDocumentProps>('User', UserSchema);
 const UserTC = composeMongoose(User, {});
 
 const userQuery = {
-  getAllUsers: UserTC.mongooseResolvers.findMany(),
-  getUser: UserTC.mongooseResolvers.findOne({ filter: { requiredFields: 'email' } }),
+  getUsers: UserTC.mongooseResolvers.findMany(),
+  getUser: UserTC.mongooseResolvers.findOne(),
 };
 
 const userMutation = {

@@ -6,6 +6,7 @@ import http from 'http';
 
 import { EnvValueType } from '../types/envs';
 import { schema } from './db/schemas/schemas';
+import { validToken } from './utils/validToken';
 
 interface GetApolloServerProps {
   server: Express;
@@ -18,6 +19,16 @@ export const Apollo = async ({ server, port }: GetApolloServerProps) => {
   const apollo = new ApolloServer({
     schema,
     csrfPrevention: true,
+    cache: 'bounded',
+    context: async ({ req }) => {
+      const token = req.headers.authorization || '';
+      const { node } = (await validToken(token)) || {};
+      console.log('req', req);
+
+      return {
+        expired: node?.expired,
+      };
+    },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
   await apollo.start();
