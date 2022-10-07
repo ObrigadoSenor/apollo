@@ -3,29 +3,36 @@
 type Tag {
   name: String
   weight: Int
-  ownerId: String
+}
+
+type Tags {
   projectId: String
+  tags: [Tag]
 }
 
 type GetTags {
   status: Status
-  data: [Tag]
-}
-
-type GetTag {
-  status: Status
-  data: Tag
+  data: [Tags]
 }
 
 type SetTag {
   status: Status
 }
 
+type DeleteTag {
+  status: Status
+}
+
+type DeleteTags {
+  status: Status
+}
+
 type Mutation {
-  setTag(name: String!, weight: Int!): SetTag
+  setTag(name: String!, weight: Int!, projectId: String!): SetTag
+  deleteTag(projectId: String!, tagId: String!): DeleteTag
+  deleteTags(projectId: String!): DeleteTags
 }
 
 type Query {
   getTags(projectId: String!): GetTags
-  getTag(projectId: String!, _id: String!): GetTag
 }
