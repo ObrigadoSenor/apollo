@@ -16,8 +16,8 @@ export interface GetApolloServerProps {
 }
 
 export interface ContextProps {
-  expiredToken: boolean;
-  id: string;
+  expiredToken?: boolean;
+  id?: string;
 }
 
 /* RESOLVER CHECKS */

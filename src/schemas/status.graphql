@@ -2,5 +2,4 @@ type Status {
   code: Int
   success: Boolean
   message: String
-  error: String
 }

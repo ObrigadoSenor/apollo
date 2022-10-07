@@ -1,8 +1,8 @@
 import { ContextProps, ResolveCheckType } from '../types';
+import { getStatus } from './getStatus';
 
-export const authRequired = (ctx: ContextProps): ResolveCheckType => {
-  if (ctx.expiredToken) {
-    return { success: false, status: { code: 500, error: 'Token is expired', success: false } };
-  }
-  return { success: true, status: { code: 200, error: 'Token is valid', success: true } };
+export const authRequired = ({ expiredToken }: ContextProps): ResolveCheckType => {
+  const code = expiredToken ? 500 : 200;
+  const message = expiredToken ? 'Token is expired' : 'Token is valid';
+  return { success: !!expiredToken, ...getStatus({ code, message }) };
 };

@@ -2,11 +2,14 @@ import { Projects } from '../models/projects';
 import { Tag, Tags } from '../models/tags';
 import { ContextProps } from '../types';
 import { authRequired } from '../utils/authRequired';
+import { getStatus } from '../utils/getStatus';
 import { validObjectId } from '../utils/validObjectId';
 import {
   DeleteTag,
+  DeleteTags,
   GetTags,
   MutationDeleteTagArgs,
+  MutationDeleteTagsArgs,
   MutationSetTagArgs,
   QueryGetTagsArgs,
   SetTag,
@@ -15,9 +18,7 @@ import {
 export const tagsQuery = {
   async getTags(_: unknown, { projectId }: QueryGetTagsArgs, ctx: ContextProps): Promise<GetTags> {
     const { success, status } = authRequired(ctx) && validObjectId(projectId);
-    if (!success) {
-      return { status };
-    }
+    if (!success) return { status };
 
     return await Tags.find({ projectId })
       .then((data) => ({
@@ -34,9 +35,7 @@ export const tagsQuery = {
 export const tagsMutation = {
   async setTag(_: unknown, args: MutationSetTagArgs, ctx: ContextProps): Promise<SetTag> {
     const { success, status } = authRequired(ctx) && validObjectId(args.projectId);
-    if (!success) {
-      return { status };
-    }
+    if (!success) return { status };
 
     const { projectId, ...tagRest } = args;
 
@@ -74,9 +73,7 @@ export const tagsMutation = {
   },
   async deleteTag(_: unknown, { projectId, tagId }: MutationDeleteTagArgs, ctx: ContextProps): Promise<DeleteTag> {
     const { success, status } = authRequired(ctx) && validObjectId([projectId, tagId]);
-    if (!success) {
-      return { status };
-    }
+    if (!success) return { status };
 
     return await Tags.updateOne({ projectId }, { $pull: { tags: { _id: tagId } } }, { safe: true, multi: true })
       .then(async () => {
@@ -84,6 +81,14 @@ export const tagsMutation = {
         return { status: { code: 200, message: `Successfully removed tag with id: ${tagId}` } };
       })
       .catch((error: string) => ({ status: { code: 500, error } }));
+  },
+  async deleteTags(_: unknown, { projectId }: MutationDeleteTagsArgs, ctx: ContextProps): Promise<DeleteTags> {
+    const { success, status } = authRequired(ctx) && validObjectId(projectId);
+    if (!success) return { status };
+
+    return await Tags.deleteOne({ projectId })
+      .then(() => getStatus({ code: 200, message: `Dropped tags in project with id: ${projectId}` }))
+      .catch((message: string) => getStatus({ code: 500, message }));
   },
 };
 

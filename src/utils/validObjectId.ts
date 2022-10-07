@@ -1,7 +1,8 @@
 import { isValidObjectId } from 'mongoose';
 import { ResolveCheckType } from '../types';
+import { getStatus } from './getStatus';
 
-export const validObjectId = (objctId: string | string[]): ResolveCheckType => {
+export const validObjectId = (objctId?: string | string[]): ResolveCheckType => {
   let success = isValidObjectId(objctId);
 
   if (Array.isArray(objctId)) {
@@ -10,6 +11,6 @@ export const validObjectId = (objctId: string | string[]): ResolveCheckType => {
 
   return {
     success,
-    status: { code: success ? 200 : 500, error: `Object id is ${success ? '' : 'not'} valid`, success },
+    ...getStatus({ code: success ? 200 : 500, message: `Object id is ${success ? '' : 'not'} valid` }),
   };
 };

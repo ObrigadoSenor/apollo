@@ -23,9 +23,14 @@ type DeleteTag {
   status: Status
 }
 
+type DeleteTags {
+  status: Status
+}
+
 type Mutation {
   setTag(name: String!, weight: Int!, projectId: String!): SetTag
   deleteTag(projectId: String!, tagId: String!): DeleteTag
+  deleteTags(projectId: String!): DeleteTags
 }
 
 type Query {

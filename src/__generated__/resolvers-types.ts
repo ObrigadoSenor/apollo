@@ -22,6 +22,10 @@ export type DeleteTag = {
   status?: Maybe<Status>;
 };
 
+export type DeleteTags = {
+  status?: Maybe<Status>;
+};
+
 export type GetProject = {
   data?: Maybe<Project>;
   status?: Maybe<Status>;
@@ -40,6 +44,7 @@ export type GetTags = {
 export type Mutation = {
   deleteProject?: Maybe<DeleteProject>;
   deleteTag?: Maybe<DeleteTag>;
+  deleteTags?: Maybe<DeleteTags>;
   setProject?: Maybe<SetProject>;
   setTag?: Maybe<SetTag>;
   updateProject?: Maybe<UpdateProject>;
@@ -54,6 +59,11 @@ export type MutationDeleteProjectArgs = {
 export type MutationDeleteTagArgs = {
   projectId: Scalars['String'];
   tagId: Scalars['String'];
+};
+
+
+export type MutationDeleteTagsArgs = {
+  projectId: Scalars['String'];
 };
 
 
@@ -111,7 +121,6 @@ export type SetTag = {
 
 export type Status = {
   code?: Maybe<Scalars['Int']>;
-  error?: Maybe<Scalars['String']>;
   message?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
 };
@@ -202,6 +211,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   DeleteProject: ResolverTypeWrapper<DeleteProject>;
   DeleteTag: ResolverTypeWrapper<DeleteTag>;
+  DeleteTags: ResolverTypeWrapper<DeleteTags>;
   GetProject: ResolverTypeWrapper<GetProject>;
   GetProjects: ResolverTypeWrapper<GetProjects>;
   GetTags: ResolverTypeWrapper<GetTags>;
@@ -223,6 +233,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   DeleteProject: DeleteProject;
   DeleteTag: DeleteTag;
+  DeleteTags: DeleteTags;
   GetProject: GetProject;
   GetProjects: GetProjects;
   GetTags: GetTags;
@@ -249,6 +260,11 @@ export type DeleteTagResolvers<ContextType = any, ParentType extends ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type DeleteTagsResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteTags'] = ResolversParentTypes['DeleteTags']> = {
+  status?: Resolver<Maybe<ResolversTypes['Status']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type GetProjectResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProject'] = ResolversParentTypes['GetProject']> = {
   data?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType>;
   status?: Resolver<Maybe<ResolversTypes['Status']>, ParentType, ContextType>;
@@ -270,6 +286,7 @@ export type GetTagsResolvers<ContextType = any, ParentType extends ResolversPare
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   deleteProject?: Resolver<Maybe<ResolversTypes['DeleteProject']>, ParentType, ContextType, RequireFields<MutationDeleteProjectArgs, 'projectId'>>;
   deleteTag?: Resolver<Maybe<ResolversTypes['DeleteTag']>, ParentType, ContextType, RequireFields<MutationDeleteTagArgs, 'projectId' | 'tagId'>>;
+  deleteTags?: Resolver<Maybe<ResolversTypes['DeleteTags']>, ParentType, ContextType, RequireFields<MutationDeleteTagsArgs, 'projectId'>>;
   setProject?: Resolver<Maybe<ResolversTypes['SetProject']>, ParentType, ContextType, RequireFields<MutationSetProjectArgs, 'name'>>;
   setTag?: Resolver<Maybe<ResolversTypes['SetTag']>, ParentType, ContextType, RequireFields<MutationSetTagArgs, 'name' | 'projectId' | 'weight'>>;
   updateProject?: Resolver<Maybe<ResolversTypes['UpdateProject']>, ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'projectId'>>;
@@ -300,7 +317,6 @@ export type SetTagResolvers<ContextType = any, ParentType extends ResolversParen
 
 export type StatusResolvers<ContextType = any, ParentType extends ResolversParentTypes['Status'] = ResolversParentTypes['Status']> = {
   code?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  error?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -326,6 +342,7 @@ export type UpdateProjectResolvers<ContextType = any, ParentType extends Resolve
 export type Resolvers<ContextType = any> = {
   DeleteProject?: DeleteProjectResolvers<ContextType>;
   DeleteTag?: DeleteTagResolvers<ContextType>;
+  DeleteTags?: DeleteTagsResolvers<ContextType>;
   GetProject?: GetProjectResolvers<ContextType>;
   GetProjects?: GetProjectsResolvers<ContextType>;
   GetTags?: GetTagsResolvers<ContextType>;
