@@ -1,7 +1,7 @@
 import { Document, model, Schema } from 'mongoose';
-import { Tag } from '../__generated__/resolvers-types';
+import { Tags as TagsType, Tag as TagType } from '../__generated__/resolvers-types';
 
-export const TagsSchema = new Schema({
+export const TagSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -13,10 +13,16 @@ export const TagsSchema = new Schema({
       message: '{VALUE} is not an integer value',
     },
   },
-  ownerId: {
+});
+
+export const TagsSchema = new Schema({
+  projectId: {
     type: String,
     required: true,
   },
+  tags: [TagSchema],
 });
 
-export const Tags = model<Tag & Document>('Tags', TagsSchema);
+export const Tag = model<TagType & Document>('Tag', TagSchema);
+
+export const Tags = model<TagsType & Document>('Tags', TagsSchema);

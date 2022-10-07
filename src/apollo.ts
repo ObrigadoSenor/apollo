@@ -4,13 +4,13 @@ import { ApolloServer } from 'apollo-server-express';
 import http from 'http';
 
 import { validToken } from './utils/validToken';
-import { ContextProps, GetApolloServerProps } from './../types/apolloTypes';
 
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema';
 import { resolve } from 'path';
 import resolvers from './resolvers';
+import { ContextProps, GetApolloServerProps } from './types';
 
 const loadSchema = loadSchemaSync(resolve(__dirname, 'schemas/*.graphql'), {
   loaders: [new GraphQLFileLoader()],

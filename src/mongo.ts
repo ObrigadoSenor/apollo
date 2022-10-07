@@ -1,5 +1,5 @@
 import { connection, connect } from 'mongoose';
-import { EnvValueType } from '../../types/envs';
+import { EnvValueType } from './types';
 
 interface ConnectToDBProps {
   uri: EnvValueType;

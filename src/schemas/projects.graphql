@@ -30,12 +30,12 @@ type UpdateProject {
 }
 
 type Mutation {
-  setProject(name: String!, ownerId: String!): SetProject
-  deleteProject(ownerId: String!, _id: String!): DeleteProject
-  updateProject(ownerId: String!, _id: String!, name: String): UpdateProject
+  setProject(name: String!): SetProject
+  deleteProject(projectId: String!): DeleteProject
+  updateProject(projectId: String!, name: String): UpdateProject
 }
 
 type Query {
-  getProjects(ownerId: String!): GetProjects
-  getProject(_id: String!): GetProject
+  getProjects(ownerId: String): GetProjects
+  getProject(projectId: String!): GetProject
 }

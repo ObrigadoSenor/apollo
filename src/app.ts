@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { Apollo } from './apollo';
-import { connectToDB } from './db/connect';
+import { connectToDB } from './mongo';
 import routes from './routes';
 import { getEnvVars } from './utils/getEnvVars';
 

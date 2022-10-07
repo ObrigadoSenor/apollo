@@ -1,11 +1,8 @@
-import { ContextProps } from '../../types/apolloTypes';
-import { Status } from '../__generated__/resolvers-types';
+import { ContextProps, ResolveCheckType } from '../types';
 
-export const authRequired = (ctx: ContextProps): Status => {
-  console.log('ctx', ctx);
-
+export const authRequired = (ctx: ContextProps): ResolveCheckType => {
   if (ctx.expiredToken) {
-    return { code: 500, error: 'Token is expired', success: false };
+    return { success: false, status: { code: 500, error: 'Token is expired', success: false } };
   }
-  return { code: 200, error: 'Token is valid', success: true };
+  return { success: true, status: { code: 200, error: 'Token is valid', success: true } };
 };
