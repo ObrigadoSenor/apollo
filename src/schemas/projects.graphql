@@ -21,8 +21,18 @@ type SetProject {
   status: Status
 }
 
+type DeleteProject {
+  status: Status
+}
+
+type UpdateProject {
+  status: Status
+}
+
 type Mutation {
-  setProject(name: String!): SetProject
+  setProject(name: String!, ownerId: String!): SetProject
+  deleteProject(ownerId: String!, _id: String!): DeleteProject
+  updateProject(ownerId: String!, _id: String!, name: String): UpdateProject
 }
 
 type Query {
