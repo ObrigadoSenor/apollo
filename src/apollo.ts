@@ -21,7 +21,7 @@ const schema = addResolversToSchema({
   resolvers,
 });
 
-export const Apollo = async ({ server, port }: GetApolloServerProps) => {
+export const apollo = async ({ server, port }: GetApolloServerProps) => {
   const httpServer = http.createServer(server);
 
   const apollo = new ApolloServer({
